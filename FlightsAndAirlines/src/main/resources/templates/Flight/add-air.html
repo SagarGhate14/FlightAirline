@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Airline | Emerald Edition 2026</title>
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net" rel="stylesheet">
+    <!-- Google Font (Inter) -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+            /* Same Attractive Emerald Background Gradient */
+            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%); 
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 50px 70px;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+            width: 95%;
+            max-width: 800px; /* Smaller width for a single-field form */
+        }
+
+        h2 { 
+            font-weight: 700; 
+            color: #16a085; 
+            margin-bottom: 30px; 
+            letter-spacing: -0.5px; 
+        }
+
+        label { 
+            font-weight: 600; 
+            font-size: 0.85rem; 
+            color: #555; 
+            margin-bottom: 8px; 
+            display: block; 
+        }
+
+        /* FLEXBOX ROW for Inline Layout */
+        .flex-row-custom {
+            display: flex;
+            gap: 20px;
+            align-items: flex-end; /* Aligns button with input */
+            width: 100%;
+        }
+
+        .flex-item-input {
+            flex: 1; /* Input takes all available space */
+            margin-right: 39px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 12px 16px;
+            background-color: #ffffff;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: #16a085;
+            box-shadow: 0 0 0 4px rgba(26, 188, 156, 0.2); 
+            outline: none;
+        }
+
+        .btn-submit {
+            background-color: #16a085;
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(22, 160, 133, 0.3);
+            transition: 0.3s;
+            height: 50px; /* Matches input height */
+        }
+
+        .btn-submit:hover {
+             background-color: #1abc9c;
+             transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-card">
+    <h2>Add New Airline</h2>
+    
+    <form th:action="@{/api/addAir}" th:object="${air}" method="POST">
+        
+        <div class="flex-row-custom">
+            <!-- Input Container -->
+            <div class="flex-item-input">
+                <label>Airline Name</label>
+                <input type="text" th:field="*{AirName}" class="form-control" placeholder="e.g. Emirates" required>
+            </div>
+
+            <!-- Submit Button directly beside input -->
+            <button type="submit" class="btn btn-submit shadow-sm">Add Airline</button>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <a th:href="@{/api/list}" style="color: #16a085; text-decoration: none; font-size: 0.9rem; font-weight: 600;">
+                ← Back to Flight List
+            </a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

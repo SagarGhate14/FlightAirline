@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Successful</title>
+    <style>
+        body { 
+            background-color: #0d0d0d; 
+            color: #fff; 
+            font-family: 'Arial', sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100vh; margin: 0; overflow: hidden;
+        }
+
+        /* Rectangular Ticket UI */
+        .ticket-rect {
+            width: 800px;
+            height: 250px;
+            background: #fff;
+            color: #333;
+            display: flex;
+            border: 1px solid #ddd;
+            position: relative;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        }
+
+        .ticket-main {
+            flex: 2;
+            padding: 30px;
+            border-right: 2px dashed #999;
+        }
+
+        .ticket-stub {
+            flex: 1;
+            background: #f9f9f9;
+            padding: 30px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        .congrats {
+            font-size: 4rem; font-weight: 900; color: #f1c40f;
+            margin-bottom: 20px; text-transform: uppercase;
+        }
+
+        h2 { margin: 0; color: #0056b3; }
+        .label { font-size: 10px; color: #888; text-transform: uppercase; margin: 0; }
+        .value { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; }
+
+        canvas { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 999; }
+    </style>
+</head>
+<body>
+
+    <h1 class="congrats">BOOKED!</h1>
+
+    <div class="ticket-rect">
+        <div class="ticket-main">
+            <h2 th:text="${flight.enterprise}">QATAR AIRWAYS</h2>
+            <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+                <div>
+                    <p class="label">From</p>
+                    <p class="value" th:text="${flight.source}">HYDERABAD</p>
+                    <p th:text="${flight.departureDate}">2026-01-24</p>
+                </div>
+                <div style="font-size: 2rem;">✈</div>
+                <div style="text-align: right;">
+                    <p class="label">To</p>
+                    <p class="value" th:text="${flight.destination}">DOHA</p>
+                    <p th:text="${flight.arrivalDate}">2026-01-24</p>
+                </div>
+            </div>
+        </div>
+        <div class="ticket-stub">
+            <p class="label">Fare Paid</p>
+            <h2 style="color: #27ae60;" th:text="'₹' + ${flight.flightPrice}">₹45000</h2>
+            <p class="label" style="margin-top: 20px;">Flight ID</p>
+            <p th:text="'#FL' + ${flight.flightId}">#FL1</p>
+        </div>
+    </div>
+
+    <!-- Celebration Canvas -->
+    <canvas id="celebrationCanvas"></canvas>
+
+    <script>
+        // CRACKER & CONFETTI ENGINE (No Library Needed)
+        const canvas = document.getElementById('celebrationCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const colors = ['#ff0000', '#ffd700', '#ffffff', '#00ff00', '#ff00ff', '#00ffff'];
+
+        function createCrackerBurst(x, y) {
+            for (let i = 0; i < 40; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 6 + 2,
+                    speedX: (Math.random() - 0.5) * 15,
+                    speedY: (Math.random() - 0.5) * 15,
+                    gravity: 0.2,
+                    life: 1.0
+                });
+            }
+        }
+
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, index) => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.speedY += p.gravity;
+                p.life -= 0.015;
+                
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.life;
+                ctx.fillRect(p.x, p.y, p.size, p.size);
+
+                if (p.life <= 0) particles.splice(index, 1);
+            });
+            requestAnimationFrame(update);
+        }
+
+        window.onload = function() {
+            update();
+            // Fire initial burst
+            createCrackerBurst(canvas.width / 2, canvas.height / 2);
+            
+            // Random crackers for 4 seconds
+            let count = 0;
+            let interval = setInterval(() => {
+                createCrackerBurst(Math.random() * canvas.width, Math.random() * canvas.height);
+                count++;
+                if (count > 15) clearInterval(interval);
+            }, 300);
+        };
+    </script>
+</body>
+</html>

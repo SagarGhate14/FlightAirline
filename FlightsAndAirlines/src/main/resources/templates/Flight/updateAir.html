@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Airline | Emerald Edition 2026</title>
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%); 
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 50px 70px;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+            width: 95%;
+            max-width: 800px; /* Narrower for just ID and Name */
+        }
+
+        .flex-row-custom {
+            display: flex;         
+            gap: 30px;             
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .flex-item {
+            flex: 1;               
+        }
+
+        h2 { font-weight: 700; color: #16a085; margin-bottom: 40px; letter-spacing: -0.5px; }
+
+        label { font-weight: 600; font-size: 0.85rem; color: #555; margin-bottom: 8px; display: block; }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 12px 16px;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: #16a085;
+            box-shadow: 0 0 0 4px rgba(26, 188, 156, 0.2); 
+            outline: none;
+        }
+
+        .btn-submit {
+            background-color: #16a085;
+            color: white;
+            border: none;
+            padding: 14px 60px;
+            border-radius: 8px;
+            font-weight: 700;
+            float: right;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(22, 160, 133, 0.3);
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+             background-color: #1abc9c;
+             transform: translateY(-2px);
+        }
+
+        .readonly-field {
+            background-color: #f8f9fa;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-card">
+    <h2><i class="fa-solid fa-pen-to-square me-2"></i> Update Airline Details</h2>
+    
+    <!-- POST to your update URL -->
+    <form th:action="@{/api/addAir}" th:object="${air}" method="POST">
+        
+        <div class="flex-row-custom">
+            <!-- ID Field (Read-only but visible) -->
+            <div class="flex-item">
+                <label>Airline ID</label>
+                <input type="text" th:field="*{Aid}" class="form-control readonly-field" readonly>
+            </div>
+
+            <!-- Airline Name Field -->
+            <div class="flex-item">
+                <label>Airline (Enterprise) Name</label>
+                <input type="text" th:field="*{AirName}" class="form-control" placeholder="Enter new airline name" required>
+            </div>
+        </div>
+
+        <div style="overflow: auto; margin-top: 30px;">
+            <button type="submit" class="btn btn-submit shadow-sm">Update Airline</button>
+            <a th:href="@{/api/showAirline}" class="btn btn-light me-2" style="float:right; margin-top:20px; padding: 14px 30px; border-radius: 8px;">Cancel</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

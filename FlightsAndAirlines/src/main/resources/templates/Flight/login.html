@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Emerald Edition 2026</title>
+    <!-- Bootstrap 5.3 -->
+    <!-- Note: I am using public CDNs for maximum compatibility in this template -->
+    <link href="https://cdn.jsdelivr.net" rel="stylesheet">
+    <!-- Google Font (Inter) -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    
+    <style>
+        /* Reusing the core background and font styles from your directory page */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%); 
+            min-height: 100vh;
+            margin: 0;
+            display: flex; /* Centers the card vertically and horizontally */
+            align-items: center;
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Adapting the 'directory-card' concept to a 'login-card' (narrower) */
+        .login-card {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 45px;
+            border-radius: 18px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 450px; /* Sized appropriately for a login form */
+            text-align: center; /* Centers header content */
+        }
+
+        .login-header {
+            margin-bottom: 35px;
+        }
+
+        .login-header i {
+            font-size: 3rem;
+            color: #16a085; /* Emerald Green color */
+            margin-bottom: 15px;
+        }
+
+        h2 { 
+            font-weight: 700; 
+            color: #16a085; /* Emerald Green color */
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+
+        /* Styling form elements to match the clean aesthetic */
+        .form-label {
+            font-weight: 600;
+            color: #555;
+            float: left; /* Aligns labels to the left above the input */
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #1abc9c;
+            box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2); /* Subtle green focus ring */
+            outline: none;
+        }
+
+        /* Reusing the 'btn-action' styling concept for the login button */
+        .btn-login {
+            background-color: #16a085;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            width: 100%; /* Full width button */
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: #1abc9c;
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            color: #86868b;
+            font-size: 0.9rem;
+        }
+
+        .footer-text a {
+            color: #16a085;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Added Styling for Potential Error Messages */
+        .alert-danger {
+            background-color: #fff1f0;
+            border: 1px solid #ffa39e;
+            color: #cf1322;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div class="login-header">
+        <i class="fa-solid fa-paper-plane"></i>
+        <h2>Welcome Back</h2>
+        <p class="text-muted">Emerald Edition 2026 Flight Management</p>
+    </div>
+
+    <!-- Thymeleaf/Spring Security Error Handling -->
+    <div th:if="${param.error}" class="alert alert-danger">
+        <i class="fa-solid fa-circle-exclamation me-2"></i> Invalid username or password.
+    </div>
+
+    <!-- Standard Login Form Structure -->
+    <!-- Assuming your Spring Security configuration posts to /login -->
+    <form th:action="@{/login}" method="POST">
+        <div class="mb-1">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required autofocus>
+        </div>
+
+        <div class="mb-1">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-login">
+            Login to Dashboard
+        </button>
+    </form>
+
+    <div class="footer-text">
+        <p>Don't have an account? <a href="/register">Contact Administrator</a></p>
+    </div>
+</div>
+
+</body>
+</html>
